@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Mirjam Allik" />
+
+
+<title>SocEpi Vignette</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">SocEpi Vignette</h1>
+<h4 class="author">Mirjam Allik</h4>
+<h4 class="date">18 May, 2020</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(SocEpi)</a></code></pre></div>
+<p>The <code>SocEpi</code> package is developed for research in social epidemiology, particularly for health inequality research. The user guide will give some examples of the main functions and references the methods used for the calculations. If you notice any problems or think that the functions are not performing correctly, please use the package repository’s <em>Issues</em> section on GitHub <a href="https://github.com/m-allik/SocEpi" class="uri">https://github.com/m-allik/SocEpi</a>. Comments and suggestions are welcome!</p>
+<div id="installation" class="section level1">
+<h1>Installation</h1>
+<p>Before installing <code>ScoEpi</code>, install the dependencies and then load them using the following code. This may take some time if you have not used any of these packages before. You can skip this step if you have <code>dplyr</code> and <code>tidyr</code> (or <code>tidyverse</code>) installed.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;tidyr&quot;</span>, <span class="st">&quot;Rcpp&quot;</span>), <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">library</span>(Rcpp)</a></code></pre></div>
+<p>You can then install the <code>SocEpi</code> package.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">install.packages</span>(SocEpi) <span class="co"># if not installed before</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">library</span>(SocEpi)</a></code></pre></div>
+</div>
+<div id="examples" class="section level1">
+<h1>Examples</h1>
+<p>When the package is loaded test to see if you can run some of the examples from the help documentation. The package includes the following functions: <code>zscore</code>, <code>w_pcntile</code>, <code>smr</code>, <code>st_rate</code> and <code>rii</code>. You can look each of these up using <code>?</code><em>function_name</em>. For example, use <code>?w_pcntile</code> or <code>?rii</code> to look up the weighted percentile and the SII/RII functions. The package also includes test data (<em>dep_data</em> and <em>health_data</em>), you can look up the code books for these by typing <code>?dep_data</code> and <code>?health_data</code>. Use <code>summmary(health_data)</code> or <code>str(health_data)</code> to look at the data. Follow the examples given in the help documentation to see how the functions work. If the code in the help files gives you the same results as below then the package is loaded successfully and you can test it on your own data.</p>
+<div id="functions-for-measuring-deprivation" class="section level2">
+<h2>Functions for measuring deprivation</h2>
+<p>The functions <code>zscore</code> and <code>w_pcntile</code> are useful for developing deprivation measures. <code>zscore</code> calculates z-scores (standardized scores) for a deprivation indicator (e.g. percent unemployed) with a mean close to zero and standard deviation (sd) close to one.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">data &lt;-<span class="st"> </span>dep_data</a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co"># Calculate z-score, weighted mean, sd and store all data in object z_oc</span></a>
+<a class="sourceLine" id="cb4-4" title="4">z_oc &lt;-<span class="st"> </span><span class="kw">zscore</span>(data<span class="op">$</span>total_pop, data<span class="op">$</span>pcnt_overcrowding)</a>
+<a class="sourceLine" id="cb4-5" title="5"></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co"># Extract z-score</span></a>
+<a class="sourceLine" id="cb4-7" title="7">data<span class="op">$</span>z_overcrowd &lt;-<span class="st"> </span>z_oc<span class="op">$</span>z.score</a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">mean</span>(data<span class="op">$</span>z_overcrowd) <span class="co">#mean of z-score</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; [1] -0.1267028</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="kw">sd</span>(data<span class="op">$</span>z_overcrowd) <span class="co">#sd z-score</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; [1] 1.060796</span></a>
+<a class="sourceLine" id="cb4-12" title="12"></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co"># Compare weighted mean and sd to actual mean and sd</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="kw">mean</span>(data<span class="op">$</span>pcnt_overcrowding)</a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; [1] 3.026054</span></a>
+<a class="sourceLine" id="cb4-16" title="16">z_oc<span class="op">$</span>w.mean</a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; [1] 3.261987</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="kw">sd</span>(data<span class="op">$</span>pcnt_overcrowding)</a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; [1] 1.975309</span></a>
+<a class="sourceLine" id="cb4-20" title="20">z_oc<span class="op">$</span>w.sd</a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; [1] 1.8621</span></a></code></pre></div>
+<p>The <code>w_pcntile</code> calculates population weighted deprivation percentiles, such as deciles or quintiles. The function is useful for calculation categorical deprivation measures that can be used to measure inequalities in health.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Calculate deciles (default)</span></a>
+<a class="sourceLine" id="cb5-2" title="2">data<span class="op">$</span>dec_overcrowd &lt;-<span class="st"> </span><span class="kw">w_pcntile</span>(data, total_pop, pcnt_overcrowding)</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co"># Percent of people by decile - note minor variation</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">tapply</span>(data<span class="op">$</span>total_pop, data<span class="op">$</span>dec_overcrowd, sum)<span class="op">/</span><span class="kw">sum</span>(data<span class="op">$</span>total_pop)<span class="op">*</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt;         1         2         3         4         5         6         7         8 </span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; 10.038651 10.031172  9.940358 10.081650 10.075815 10.048489  9.972914  9.986530 </span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;         9        10 </span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt;  9.899001  9.925420</span></a>
+<a class="sourceLine" id="cb5-10" title="10"></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co"># Average percent of overcrowding by decile</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="kw">tapply</span>(data<span class="op">$</span>pcnt_overcrowding, data<span class="op">$</span>dec_overcrowd, mean)</a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt;         1         2         3         4         5         6         7         8 </span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="co">#&gt; 0.7002005 1.6134779 2.0431479 2.3614016 2.7224485 3.1667069 3.5734748 4.0444986 </span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="co">#&gt;         9        10 </span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt; 4.9597283 7.2803698</span></a></code></pre></div>
+</div>
+<div id="functions-for-measuring-health-inequalities" class="section level2">
+<h2>Functions for measuring health inequalities</h2>
+<p>The three functions <code>smr</code>, <code>st_rate</code> and <code>rii</code> are useful for measuring health and health inequalities. The <code>smr</code> function calculates standardized mortality ratios (SMR) and confidence intervals using indirect standardization. The function requires that at least two population groups be provided by the <code>sets</code> argument. The first of these populations will be used as the standard or the reference population and the SMRs will be calculated for the second population. If more than two groups are identified the first population will still be the reference population and the SMRs will be calculated for all other groups. The <code>smr</code>, <code>st_rate</code> and <code>rii</code> all allow the used to select age groups for which the results are provided, results for ages 0-64 and all ages are always provided.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Example of calculating RII/SII with long format data</span></a>
+<a class="sourceLine" id="cb6-2" title="2">d &lt;-<span class="st"> </span>health_data</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co"># Asian population compared to Scottish (reference)</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">smr</span>(d, bad, pop, age, ethnicity, <span class="dt">sets =</span> <span class="kw">c</span>(<span class="st">&quot;Scot&quot;</span>, <span class="st">&quot;asian&quot;</span>))</a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt;     age group       smr    ci_low   ci_high</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; 1  0-14 asian 142.40849 121.60445 163.21253</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; 2 15-29 asian  54.28738  48.22460  60.35016</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; 3 30-44 asian  58.18469  54.30945  62.05992</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; 4 45-59 asian  99.54014  94.28073 104.79955</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; 5 60-74 asian 138.72264 130.14182 147.30345</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; 6    75 asian 147.38945 134.92344 159.85546</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; 7  0-64 asian  53.95450  52.05181  55.85718</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; 8   all asian  50.97796  49.44911  52.50681</span></a>
+<a class="sourceLine" id="cb6-15" title="15"></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="co"># Asian, White British and Irish population compared to Scottish (reference)</span></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="kw">smr</span>(d, bad, pop, age, ethnicity, <span class="dt">sets =</span> <span class="kw">c</span>(<span class="st">&quot;Scot&quot;</span>, <span class="st">&quot;asian&quot;</span>, <span class="st">&quot;WB&quot;</span>, <span class="st">&quot;Irish&quot;</span>),</a>
+<a class="sourceLine" id="cb6-18" title="18">   <span class="dt">age_group =</span> <span class="kw">c</span>(<span class="st">&quot;15-29&quot;</span>, <span class="st">&quot;30-44&quot;</span>), <span class="dt">CI =</span> <span class="dv">99</span>)</a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt;      age group       smr   ci_low   ci_high</span></a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt; 1  15-29 asian  54.28738 46.31954  62.25522</span></a>
+<a class="sourceLine" id="cb6-21" title="21"><span class="co">#&gt; 2  30-44 asian  58.18469 53.09177  63.27761</span></a>
+<a class="sourceLine" id="cb6-22" title="22"><span class="co">#&gt; 3   0-64 asian  53.95450 51.45395  56.45505</span></a>
+<a class="sourceLine" id="cb6-23" title="23"><span class="co">#&gt; 4    all asian  50.97796 48.96871  52.98721</span></a>
+<a class="sourceLine" id="cb6-24" title="24"><span class="co">#&gt; 5  15-29 Irish  55.14013 39.26052  71.01974</span></a>
+<a class="sourceLine" id="cb6-25" title="25"><span class="co">#&gt; 6  30-44 Irish  62.99013 53.84828  72.13199</span></a>
+<a class="sourceLine" id="cb6-26" title="26"><span class="co">#&gt; 7   0-64 Irish  87.84777 82.20133  93.49422</span></a>
+<a class="sourceLine" id="cb6-27" title="27"><span class="co">#&gt; 8    all Irish 103.27968 98.66751 107.89185</span></a>
+<a class="sourceLine" id="cb6-28" title="28"><span class="co">#&gt; 9  15-29    WB  82.12254 74.37255  89.87254</span></a>
+<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt; 10 30-44    WB  66.80456 63.33656  70.27257</span></a>
+<a class="sourceLine" id="cb6-30" title="30"><span class="co">#&gt; 11  0-64    WB  77.14871 75.27139  79.02604</span></a>
+<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt; 12   all    WB  78.05216 76.60830  79.49602</span></a></code></pre></div>
+<p>The <code>st_rate</code> function calculates direct standardized rates by deprivation or socioeconomic status (SES). Overall rates across all deprivation categories or SES are also provided. The function provides multiple built-in standard populations, but user supplied weights can also be provided. Sub-populations (gender, ethnicity) can be selected using the <code>groups</code> argument.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Standardized rates for all people</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">st_rate</span>(d, bad, pop, quintile, age, ethnicity <span class="op">==</span><span class="st"> &quot;all&quot;</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt; # A tibble: 48 x 5</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt;    ses   age     rate CI_low CI_high</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt;  1 1     0-14    2.39   2.17    2.62</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt;  2 1     15-29   7.13   6.72    7.55</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt;  3 1     30-44  15.7   15.2    16.3 </span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt;  4 1     45-59  34.3   33.6    35.1 </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt;  5 1     60-74  57.5   56.3    58.6 </span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt;  6 1     75    116.   114.    119.  </span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt;  7 2     0-14    3.05   2.78    3.32</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt;  8 2     15-29   8.73   8.31    9.16</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt;  9 2     30-44  24.5   23.9    25.2 </span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; 10 2     45-59  53.2   52.2    54.1 </span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; # ... with 38 more rows</span></a>
+<a class="sourceLine" id="cb7-17" title="17"></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co"># Standardized rates for Scottish for ages 15-29 and 30-44 with 99% CI</span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="kw">st_rate</span>(d, bad, pop, quintile, age, ethnicity <span class="op">==</span><span class="st"> &quot;Scot&quot;</span>, </a>
+<a class="sourceLine" id="cb7-20" title="20">        <span class="dt">age_group=</span><span class="kw">c</span>(<span class="st">&quot;15-29&quot;</span>, <span class="st">&quot;30-44&quot;</span>), <span class="dt">CI=</span><span class="dv">99</span>)</a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; # A tibble: 24 x 5</span></a>
+<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt;    ses   age    rate CI_low CI_high</span></a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt;  1 1     15-29  7.42   6.80    8.05</span></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt;  2 1     30-44 16.4   15.6    17.3 </span></a>
+<a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt;  3 2     15-29  9.43   8.77   10.1 </span></a>
+<a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt;  4 2     30-44 25.7   24.7    26.8 </span></a>
+<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt;  5 3     15-29 11.6   11.0    12.3 </span></a>
+<a class="sourceLine" id="cb7-29" title="29"><span class="co">#&gt;  6 3     30-44 34.2   33.0    35.3 </span></a>
+<a class="sourceLine" id="cb7-30" title="30"><span class="co">#&gt;  7 4     15-29 12.8   12.1    13.5 </span></a>
+<a class="sourceLine" id="cb7-31" title="31"><span class="co">#&gt;  8 4     30-44 44.2   42.9    45.4 </span></a>
+<a class="sourceLine" id="cb7-32" title="32"><span class="co">#&gt;  9 5     15-29 17.6   16.8    18.4 </span></a>
+<a class="sourceLine" id="cb7-33" title="33"><span class="co">#&gt; 10 5     30-44 70.9   69.3    72.6 </span></a>
+<a class="sourceLine" id="cb7-34" title="34"><span class="co">#&gt; # ... with 14 more rows</span></a></code></pre></div>
+<p>The <code>rii</code> function calculates either the slope (SII) or the relative (RII) index of inequality. It may take a few seconds to run the <code>rii</code> function, the simulation is a bit lengthy and I recommend not going above 1000 if you are just doing some preliminary analysis. A number of built-in standard population weights are provided for standardization, to view these type <code>?st_pop</code>. <strong>Note!</strong> If you can summarize the data and use the <code>w_pcntile</code> and <code>zscore</code> function, but get an error running the <code>rii</code> or <code>st_rate</code> functions, then the dependencies <code>dplyr</code> or <code>tidyr</code> might not be loaded properly into R.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># RII with 95% CI</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">rii</span>(d, bad, pop, quintile, age, ethnicity <span class="op">==</span><span class="st"> &quot;all&quot;</span>)</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;   age     rii ci_low ci_high</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; 1 0-14  1.29   1.17    1.39 </span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 2 15-29 0.866  0.805   0.923</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 3 30-44 1.60   1.57    1.63 </span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 4 45-59 1.69   1.66    1.71 </span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 5 60-74 1.46   1.44    1.48 </span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; 6 75    0.864  0.837   0.891</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; 7 0-64  1.61   1.59    1.62 </span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; 8 all   1.38   1.37    1.40</span></a>
+<a class="sourceLine" id="cb8-14" title="14"></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co"># SII with 99% CI</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="kw">rii</span>(d, bad, pop, quintile, age, ethnicity <span class="op">==</span><span class="st"> &quot;all&quot;</span>, <span class="dt">RII=</span><span class="ot">FALSE</span>, <span class="dt">CI=</span><span class="dv">99</span>)</a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt;   age      sii ci_low ci_high</span></a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt;   &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt; 1 0-14    5.51   4.94    6.13</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; 2 15-29   9.61   8.65   10.6 </span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt; 3 30-44  57.0   55.5    58.5 </span></a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; 4 45-59 132.   129.    134.  </span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; 5 60-74 163.   159.    166.  </span></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt; 6 75    142.   136.    148.  </span></a>
+<a class="sourceLine" id="cb8-26" title="26"><span class="co">#&gt; 7 0-64   64.4   63.6    65.3 </span></a>
+<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt; 8 all    81.6   80.6    82.7</span></a>
+<a class="sourceLine" id="cb8-28" title="28"></a>
+<a class="sourceLine" id="cb8-29" title="29"><span class="co"># supply own population weights</span></a>
+<a class="sourceLine" id="cb8-30" title="30">new_w &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.075</span>, <span class="fl">0.06</span>, <span class="fl">0.060</span>, <span class="fl">0.060</span>, <span class="fl">0.06</span>, <span class="fl">0.070</span>, <span class="fl">0.050</span>, </a>
+<a class="sourceLine" id="cb8-31" title="31">           <span class="fl">0.050</span>, <span class="fl">0.050</span>, <span class="fl">0.06</span>, <span class="fl">0.060</span>, <span class="fl">0.055</span>, <span class="fl">0.050</span>, <span class="fl">0.040</span>, <span class="fl">0.025</span>, <span class="fl">0.025</span>)</a>
+<a class="sourceLine" id="cb8-32" title="32"></a>
+<a class="sourceLine" id="cb8-33" title="33"><span class="kw">rii</span>(d, bad, pop, quintile, age, ethnicity <span class="op">==</span><span class="st"> &quot;all&quot;</span>, <span class="dt">RII=</span><span class="ot">FALSE</span>, <span class="dt">CI=</span><span class="dv">99</span>, <span class="dt">st_pop=</span>new_w)</a>
+<a class="sourceLine" id="cb8-34" title="34"><span class="co">#&gt; # A tibble: 8 x 4</span></a>
+<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt;   age      sii ci_low ci_high</span></a>
+<a class="sourceLine" id="cb8-36" title="36"><span class="co">#&gt;   &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-37" title="37"><span class="co">#&gt; 1 0-14    5.47   4.88    6.10</span></a>
+<a class="sourceLine" id="cb8-38" title="38"><span class="co">#&gt; 2 15-29   9.53   8.68   10.3 </span></a>
+<a class="sourceLine" id="cb8-39" title="39"><span class="co">#&gt; 3 30-44  55.1   53.6    56.9 </span></a>
+<a class="sourceLine" id="cb8-40" title="40"><span class="co">#&gt; 4 45-59 135.   132.    137.  </span></a>
+<a class="sourceLine" id="cb8-41" title="41"><span class="co">#&gt; 5 60-74 163.   159.    166.  </span></a>
+<a class="sourceLine" id="cb8-42" title="42"><span class="co">#&gt; 6 75    142.   136.    147.  </span></a>
+<a class="sourceLine" id="cb8-43" title="43"><span class="co">#&gt; 7 0-64   55.8   55.2    56.6 </span></a>
+<a class="sourceLine" id="cb8-44" title="44"><span class="co">#&gt; 8 all    74.7   73.9    75.7</span></a>
+<a class="sourceLine" id="cb8-45" title="45"></a>
+<a class="sourceLine" id="cb8-46" title="46"><span class="co"># SII for new age groups with 95% CI</span></a>
+<a class="sourceLine" id="cb8-47" title="47"><span class="kw">rii</span>(d, bad, pop, quintile, age, ethnicity <span class="op">==</span><span class="st"> &quot;Scot&quot;</span> <span class="op">&amp;</span><span class="st">  </span>ur2fold <span class="op">==</span><span class="st"> &quot;Urban&quot;</span>,</a>
+<a class="sourceLine" id="cb8-48" title="48">   <span class="dt">age_group=</span><span class="kw">c</span>(<span class="st">&quot;0-19&quot;</span>, <span class="st">&quot;20-34&quot;</span>, <span class="st">&quot;35-49&quot;</span>), <span class="dt">RII=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-49" title="49"><span class="co">#&gt; # A tibble: 5 x 4</span></a>
+<a class="sourceLine" id="cb8-50" title="50"><span class="co">#&gt;   age     sii ci_low ci_high</span></a>
+<a class="sourceLine" id="cb8-51" title="51"><span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-52" title="52"><span class="co">#&gt; 1 0-19   5.95   5.41    6.47</span></a>
+<a class="sourceLine" id="cb8-53" title="53"><span class="co">#&gt; 2 20-34 22.9   21.7    24.0 </span></a>
+<a class="sourceLine" id="cb8-54" title="54"><span class="co">#&gt; 3 35-49 90.1   88.4    91.7 </span></a>
+<a class="sourceLine" id="cb8-55" title="55"><span class="co">#&gt; 4 0-64  70.0   69.3    70.9 </span></a>
+<a class="sourceLine" id="cb8-56" title="56"><span class="co">#&gt; 5 all   86.3   85.4    87.3</span></a></code></pre></div>
+<p>The printed results in R console will be rounded, but you can view more digits by saving the results in an object as shown in the example below. A small table like that in Figure 1 will open above your console.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># SII with 99% CI</span></a>
+<a class="sourceLine" id="cb9-2" title="2">rii_results &lt;-<span class="st"> </span><span class="kw">rii</span>(d, bad, pop, quintile, age, ethnicity <span class="op">==</span><span class="st"> &quot;all&quot;</span>, <span class="dt">RII=</span><span class="ot">FALSE</span>, <span class="dt">CI=</span><span class="dv">99</span>)</a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw">View</span>(rii_results)</a></code></pre></div>
+<div class="figure">
+<img src="data:image/png;base64,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" alt="Full results viewed in RStudio" />
+<p class="caption">Full results viewed in RStudio</p>
+</div>
+</div>
+<div id="separate-age-groups-for-ages-0-and-1-4" class="section level2">
+<h2>Separate age groups for ages 0 and 1-4</h2>
+<p>The <code>rii</code> and <code>st_rate</code> functions will automatically assume that the data include separate age groups for ages 0 and 1-4 if the first (under one) age group is coded 0. Built in standard population options for these groups are also included. <strong>If your data do not include a separate age group for those under 1, do not start numbering your age groups from 0.</strong></p>
+</div>
+<div id="combined-age-groups" class="section level2">
+<h2>Combined age groups</h2>
+<p>Sometimes age groups may be combined due to disclosure reasons, for example, groups, 0-4, 5-9 and 10-14 may be under a single group 0-14. In such cases the data need to be padded and user supplied weights need to be given to work with the <code>rii</code> and <code>st_rate</code> functions. Using the above example, add two new age groups for 0-4 and 5-9 (coding these as age groups 1 and 2) for all possible combinations in the data set (such as for all deprivation levels, gender, ethnicity or other characteristics). The health and population values for these new age groups should be set to zero. The age group 0-14 will now represent the age group 10-14 and should be coded 3. The coding for other age groups should also change accordingly. An example of padded data is given in Table , where health and population data is provided for three deprivation levels (variable <em>ses</em>) and for both sexes.</p>
+
+<p>Next, create population weights, such that the new age groups 0-4 and 5-9 have zero weight and the combined age group 10-14 (representing ages 0-14) will have the combined weight of all three age groups. For example, the 2013 ESP weights are 0.05, 0.055 and 0.055 respectively for ages 0-4, 5-9 and 10-14. These should in this example become 0, 0 and 0.16 (0.05 + 0.055 + 0.055) respectively. Supply these new weights to the function.</p>
+<p>Note, when choosing age groups for which to display the results from <code>rii</code> or <code>st_rate</code>, you need to take account of how your original data was grouped. In this example it does not make sense to request output for any age group that splits the ages 0-14 into separate groups. Results for age groups 5-14 or 10-19 would automatically include those aged younger than 5 or 10 and thus would not be correct.</p>
+</div>
+<div id="open-ended-age-groups" class="section level2">
+<h2>Open-ended age groups</h2>
+<p>The last age group should generally be open-ended. The built-in weights include options for the open-ended age groups 85+ and 95+ for 2013 ESP and 85+ for 1976 ESP. If your data includes another open-ended age group, such as 75+ or 90+ use user supplied weights that capture this. Other amendments should not be necessary.</p>
+</div>
+<div id="individual-level-data" class="section level2">
+<h2>Individual level data</h2>
+<p>The functions can be used for individual level data just as they are used for aggregate data. The functions will aggregate the individual level data up by socioeconomic status and calculate the rates, RII/SII on these.</p>
+</div>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<div id="z-scores-and-percentiles" class="section level2">
+<h2>Z-scores and percentiles</h2>
+<p>The z-score is calculated using the population weighted mean <span class="math inline">\(\mu_w\)</span> and standard deviation <span class="math inline">\(sd_w\)</span>. The population weighted mean <span class="math inline">\(\mu_w=\sum_{i=1}^{n} d_i w_i\)</span>, where <span class="math inline">\(d_i\)</span> is the deprivation variable for a small area (such as percent of unemployment) and <span class="math inline">\(w_i\)</span> the population weight, i.e. the percent of people in a small area from total population. The population weighted standard deviation is calculated as <span class="math inline">\(sd_w = \sqrt{\sum_{i=1}^{n} (d_i - \mu_w)^2 w_i}\)</span>. The z-score for the deprivation variable for each small area then is <span class="math inline">\(z_i = (d_i - \mu_w)/sd_w\)</span>.</p>
+<p>The percentiles are calculated by ordering the small areas by deprivation and then placing the small areas into groups of equal population size. For example, to calculate deciles the total population across all small areas is divided by 10, which gives the population size for a decile. The small areas are then ordered and distributed into 10 groups that have a population size roughly equal to the population size just calculated. It is generally not possible to ensure that the percentiles have exactly equal population sizes (see example above), particularly when the average population of the small area is large relative to the total population.</p>
+<p>If multiple percentiles are calculated for a research project it may make sense to calculate the percentiles with the highest number of groups first and then sum these into other percentiles. In other words, calculate deciles first and then group the deciles into quintiles. This will ensure that areas that belong to the same deciles will also belong to the same quintile. Using <code>w_pcntile</code> for quintiles and deciles separately may mean that some areas that belong to the same decile end up in a different quintile.</p>
+</div>
+<div id="standardised-mortality-ratio" class="section level2">
+<h2>Standardised mortality ratio</h2>
+<p>The standardized mortality ratio (SMR) is the number of deaths (or other health events) observed in the study population <span class="math inline">\(h_o\)</span> divided by the number that would be expected if the age-specific rates of a standard (reference) population had applied <span class="math inline">\(h_e\)</span>. This rate is often multiplied by a hundred; <span class="math inline">\(SMR = \frac{h_o}{h_e} 100\)</span>. The expected number of health events is defined as <span class="math inline">\(h_e = \sum_{i=1}^{n} n_ir_i\)</span>, where <span class="math inline">\(n_i\)</span> is the number of people in an age group in the study population, <span class="math inline">\(r_i\)</span> the crude rate for an age group in the standard (reference) population and <span class="math inline">\(n\)</span> the number of age groups.</p>
+<p>The confidence intervals for the SMR are calculated as <span class="math inline">\(CI_{SMR} = SMR \pm z\frac{\sqrt{h_o}}{h_e}\)</span>, where <span class="math inline">\(z\)</span> the z-score for chosen confidence level (e.g. 1.96 for 95% CI).</p>
+</div>
+<div id="directly-standardized-rates" class="section level2">
+<h2>Directly standardized rates</h2>
+<p>The confidence intervals for the directly standardized rates are calculated as <span class="math inline">\(CI_r = r \pm z \frac{r}{\sqrt{h}}\)</span>, where <span class="math inline">\(r\)</span> is the standardized rate, <span class="math inline">\(z\)</span> the z-score for a chosen confidence level (e.g. 1.96 for 95% CI) and <span class="math inline">\(h\)</span> the total number of health events.</p>
+</div>
+<div id="sii-and-rii" class="section level2">
+<h2>SII and RII</h2>
+<p>The SII (and RII) are calculated on direct standardized rates. The SII is obtained via an OLS regression of the standardized health variable (<span class="math inline">\(y\)</span>) on the midpoints of the cumulative population distribution (<span class="math inline">\(X\)</span>); <span class="math inline">\(SII = (X&#39;X)^{-1} X&#39;y\)</span>. The cumulative population distribution is calculated separately for each age groups. For example, for quintiles the midpoints for age groups are not exactly 0.1, 0.2, 0.5, 0.7 and 0.9. This will have an impact on SII/RII when some sub-populations, such as some age or ethnic groups, are disproportionately more likely to live in deprived or least deprived areas. It will have minimal impact on RII/SII for large age groups such as 0-64 and when the <code>groups</code> argument is not used.</p>
+<p>When SII is estimated via weighted least squares the weights will be equal to the population share of each age group; <span class="math inline">\(SII = (X&#39;WX)^{-1} X&#39;Wy)\)</span>. The relative index of inequality is calculated as <span class="math inline">\(RII = SII/\mu\)</span>, where <span class="math inline">\(\mu\)</span> is the mean level of health across all socioeconomic statuses.</p>
+<p>The confidence intervals for SII/RII are calculated using a simulation methods described by Lumme et al (2015) “A Monte Carlo method to estimate the confidence intervals for the concentration index using aggregated population register data.” Health Services &amp; Outcomes Research Methodology, 15(2), 82-98. .</p>
+</div>
+<div id="decomposing-rii" class="section level2">
+<h2>Decomposing RII</h2>
+<p>Researchers are often interested in the contribution a specific cause of death or illness on inequalities in health. To decompose RII calculate the SII for the different causes and divide these by the mean level of health for all causes. That is <span class="math inline">\(RII_c = SII_c/\mu\)</span>, where <span class="math inline">\(RII_c\)</span> is the decomposed RII for a specific cause or illness, <span class="math inline">\(SII_c\)</span> is the SII for a specific cause or illness and <span class="math inline">\(\mu\)</span> the mean level of health across all causes and socioeconomic statuses.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
